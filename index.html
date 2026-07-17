@@ -682,14 +682,14 @@
 
                     try {
                         // NOTA: Usei o novo nome da variável aqui (meuAppSupabase)
-                        const { data, error } = await meuAppSupabase.from('Clientes').insert([{ nome, email, telefone, empresa }]);
+                        const { data, error } = await meuAppSupabase.from('Clientes').insert([{ nome, email, telefone, empresa }]).select();
 
                         if (error) {
                             mensagemDiv.style.color = "red";
                             mensagemDiv.innerText = "Erro: " + error.message;
                         } else {
                             mensagemDiv.style.color = "green";
-                            mensagemDiv.innerText = "✅ Cliente cadastrado com sucesso!";
+                            mensagemDiv.innerText = "✅ cliente cadastrado com sucesso!";
                             form.reset();
                         }
                     } catch (err) {
@@ -700,9 +700,6 @@
             }
         });
     </script>
-
-</body>
-</html>
        
 </body>
 
