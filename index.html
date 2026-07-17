@@ -682,9 +682,7 @@
 
                     try {
                         // NOTA: Usei o novo nome da variável aqui (meuAppSupabase)
-                        const { data, error } = await meuAppSupabase
-                            .from('Clientes')
-                            .insert([{ nome, email, telefone, empresa }]);
+                        const { data, error } = await meuAppSupabase.from('Clientes').insert([{ nome, email, telefone, empresa }]);
 
                         if (error) {
                             mensagemDiv.style.color = "red";
