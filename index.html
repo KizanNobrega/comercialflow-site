@@ -651,9 +651,9 @@
     <div id="mensagem" style="margin-top: 15px; font-weight: bold;"></div>
 </section>
     </footer>
-    <!-- JavaScript -->
+        <!-- JavaScript -->
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-    
+
     <script>
         // Criação da variável com nome ÚNICO para evitar conflito
         const supabaseUrl = 'https://bplxdjavmttoobiwhwxa.supabase.co';
@@ -664,7 +664,7 @@
 
         // Aguarda o carregamento da página
         document.addEventListener('DOMContentLoaded', function() {
-            
+
             const form = document.getElementById('formCliente');
             const mensagemDiv = document.getElementById('mensagem');
 
@@ -680,22 +680,20 @@
                     mensagemDiv.style.color = "#555";
                     mensagemDiv.innerText = "Enviando dados...";
 
-                            try {
-            const { error } = await meuAppSupabase
-                .from('Clientes')
-                .insert([
-                    { nome, email, telefone, empresa }
-                ]);
+                    try {
+                        const { error } = await meuAppSupabase
+                            .from('Clientes')
+                            .insert([{ nome, email, telefone, empresa }]);
 
-            if (error) {
-                mensagemDiv.style.color = "red";
-                mensagemDiv.innerText = "Erro: " + error.message;
-            } else {
-                mensagemDiv.style.color = "green";
-                mensagemDiv.innerText = "✅ Cliente cadastrado com sucesso!";
-                form.reset();
-            }
-        }  catch (err) {
+                        if (error) {
+                            mensagemDiv.style.color = "red";
+                            mensagemDiv.innerText = "Erro: " + error.message;
+                        } else {
+                            mensagemDiv.style.color = "green";
+                            mensagemDiv.innerText = "✅ Cliente cadastrado com sucesso!";
+                            form.reset();
+                        }
+                    } catch (err) {
                         mensagemDiv.style.color = "red";
                         mensagemDiv.innerText = "Erro inesperado: " + err.message;
                     }
@@ -703,7 +701,6 @@
             }
         });
     </script>
-       
-</body>
 
+</body>
 </html>
