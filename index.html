@@ -636,12 +636,76 @@
             © 2026 ComercialFlow. Todos os direitos reservados.
 
         </div>
-
+<!-- SEÇÃO DE CADASTRO DE CLIENTES -->
+<section id="cadastro" style="padding: 50px 20px; background-color: #f8f9fa; text-align: center;">
+    <h2 style="margin-bottom: 20px;">Cadastre um novo Cliente</h2>
+    <form id="formCliente" style="max-width: 400px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px;">
+        <input type="text" id="nome" placeholder="Nome do Cliente" required style="padding: 12px; border: 1px solid #ccc; border-radius: 8px;">
+        <input type="email" id="email" placeholder="Email do Cliente" required style="padding: 12px; border: 1px solid #ccc; border-radius: 8px;">
+        <input type="text" id="telefone" placeholder="Telefone" required style="padding: 12px; border: 1px solid #ccc; border-radius: 8px;">
+        <input type="text" id="empresa" placeholder="Empresa" style="padding: 12px; border: 1px solid #ccc; border-radius: 8px;">
+        <button type="submit" style="padding: 15px; background-color: #3b82f6; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold;">
+            Salvar Cliente
+        </button>
+    </form>
+    <div id="mensagem" style="margin-top: 15px; font-weight: bold;"></div>
+</section>
     </footer>
-
     <!-- JavaScript -->
-    <script src="script.js"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    
+    <script>
+        // Criação da variável com nome ÚNICO para evitar conflito
+        const supabaseUrl = 'https://bplxdjavmttoobiwhwxa.supabase.co';
+        const supabaseKey = 'sb_publishable_spFnDb-61p2Kd6QlmBhERg_iS6zE0Ud';
+        const meuAppSupabase = supabase.createClient(supabaseUrl, supabaseKey);
 
+        console.log("✅ Conexão com o Supabase estabelecida com sucesso!");
+
+        // Aguarda o carregamento da página
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            const form = document.getElementById('formCliente');
+            const mensagemDiv = document.getElementById('mensagem');
+
+            if (form) {
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+
+                    const nome = document.getElementById('nome').value;
+                    const email = document.getElementById('email').value;
+                    const telefone = document.getElementById('telefone').value;
+                    const empresa = document.getElementById('empresa').value;
+
+                    mensagemDiv.style.color = "#555";
+                    mensagemDiv.innerText = "Enviando dados...";
+
+                    try {
+                        // NOTA: Usei o novo nome da variável aqui (meuAppSupabase)
+                        const { data, error } = await meuAppSupabase
+                            .from('Clientes')
+                            .insert([{ nome, email, telefone, empresa }]);
+
+                        if (error) {
+                            mensagemDiv.style.color = "red";
+                            mensagemDiv.innerText = "Erro: " + error.message;
+                        } else {
+                            mensagemDiv.style.color = "green";
+                            mensagemDiv.innerText = "✅ Cliente cadastrado com sucesso!";
+                            form.reset();
+                        }
+                    } catch (err) {
+                        mensagemDiv.style.color = "red";
+                        mensagemDiv.innerText = "Erro inesperado: " + err.message;
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>
+       
 </body>
 
 </html>
